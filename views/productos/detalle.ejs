@@ -16,6 +16,14 @@
       <a href="/productos" class="btn btn-secondary">Volver</a>
     </header>
 
+    <% if (typeof mensaje !== 'undefined' && mensaje) { %>
+      <div class="alert alert-success"><%= mensaje %></div>
+    <% } %>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="alert alert-error"><%= error %></div>
+    <% } %>
+
     <section class="card detail-card">
       <p><strong>ID:</strong> <%= producto.id %></p>
       <p><strong>Descripción:</strong> <%= producto.descripcion || 'Sin descripción' %></p>
@@ -36,6 +44,43 @@
         >
           <button type="submit" class="btn btn-danger">Eliminar producto</button>
         </form>
+      </div>
+    </section>
+
+    <section class="card movements-card">
+      <h2>Historial de movimientos</h2>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Tipo de movimiento</th>
+              <th>Cantidad</th>
+              <th>Motivo</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (typeof movimientos === 'undefined' || !movimientos || movimientos.length === 0) { %>
+              <tr>
+                <td colspan="4" class="empty">No hay movimientos registrados para este producto.</td>
+              </tr>
+            <% } else { %>
+              <% movimientos.forEach(movimiento => { %>
+                <tr>
+                  <td>
+                    <span class="movement-type movement-<%= movimiento.tipo_movimiento %>">
+                      <%= movimiento.tipo_movimiento %>
+                    </span>
+                  </td>
+                  <td><%= movimiento.cantidad %></td>
+                  <td><%= movimiento.motivo || 'Sin motivo' %></td>
+                  <td><%= movimiento.fecha_formateada %></td>
+                </tr>
+              <% }) %>
+            <% } %>
+          </tbody>
+        </table>
       </div>
     </section>
   </main>

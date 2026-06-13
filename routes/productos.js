@@ -26,6 +26,24 @@ function obtenerMensajes(req) {
     };
 }
 
+function formatearFechaEcuador(fecha) {
+    const fechaValida = fecha instanceof Date ? fecha : new Date(fecha);
+
+    if (Number.isNaN(fechaValida.getTime())) {
+        return 'Fecha no disponible';
+    }
+
+    return new Intl.DateTimeFormat('es-EC', {
+        timeZone: 'America/Guayaquil',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+    }).format(fechaValida).replace(',', '');
+}
+
 // Prueba de conexión a MySQL
 router.get('/prueba/db', async (req, res, next) => {
     try {
@@ -34,7 +52,8 @@ router.get('/prueba/db', async (req, res, next) => {
         res.json({
             ok: true,
             mensaje: 'Conexión exitosa con MySQL',
-            fecha: rows[0].fecha_actual,
+            zona_horaria: 'Ecuador continental UTC-5',
+            fecha: formatearFechaEcuador(rows[0].fecha_actual),
         });
     } catch (error) {
         next(error);
@@ -200,9 +219,14 @@ router.get('/:id', async (req, res, next) => {
             [Number(id)]
         );
 
+        const movimientosFormateados = movimientos.map((movimiento) => ({
+            ...movimiento,
+            fecha_formateada: formatearFechaEcuador(movimiento.fecha),
+        }));
+
         res.render('productos/detalle', {
             producto: productos[0],
-            movimientos,
+            movimientos: movimientosFormateados,
             ...obtenerMensajes(req),
         });
     } catch (error) {

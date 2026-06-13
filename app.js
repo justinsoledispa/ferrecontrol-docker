@@ -8,7 +8,6 @@ const logger = require('morgan');
 const methodOverride = require('method-override');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
 const productosRouter = require('./routes/productos');
 
 const app = express();
@@ -27,7 +26,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Rutas
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/productos', productosRouter);
 
 // Error 404

@@ -16,12 +16,12 @@
         <a href="/productos/<%= producto.id %>" class="btn btn-secondary">Volver</a>
     </header>
 
-    <% if (typeof error !== 'undefined' && error) { %>
-        <div class="alert alert-error"><%= error %></div>
-    <% } %>
-
     <% if (typeof mensaje !== 'undefined' && mensaje) { %>
         <div class="alert alert-success"><%= mensaje %></div>
+    <% } %>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert alert-error"><%= error %></div>
     <% } %>
 
     <section class="card">
@@ -39,7 +39,7 @@
             </label>
 
             <label>
-                Cantidad a mover
+                Cantidad
                 <input
                         type="number"
                         name="cantidad"
@@ -50,7 +50,9 @@
             </label>
 
             <p class="form-help">
-                En entrada se suma al stock actual. En salida se resta del stock actual. En ajuste, la cantidad ingresada será el nuevo stock corregido.
+                <strong>Entrada:</strong> suma la cantidad al stock actual.<br>
+                <strong>Salida:</strong> resta la cantidad del stock actual.<br>
+                <strong>Ajuste:</strong> establece la cantidad ingresada como el stock final corregido.
             </p>
 
             <label>

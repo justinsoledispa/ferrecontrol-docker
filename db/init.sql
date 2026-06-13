@@ -1,6 +1,8 @@
 USE ferrecontrol_db;
 
-CREATE TABLE IF NOT EXISTS categorias (
+SET NAMES utf8mb4;
+SET CHARACTER SET utf8mb4;
+    CREATE TABLE IF NOT EXISTS categorias (
                                           id INT AUTO_INCREMENT PRIMARY KEY,
                                           nombre VARCHAR(100) NOT NULL UNIQUE,
     descripcion TEXT

@@ -16,6 +16,14 @@
       <a href="/productos/nuevo" class="btn btn-primary">Nuevo producto</a>
     </header>
 
+    <% if (typeof mensaje !== 'undefined' && mensaje) { %>
+      <div class="alert alert-success"><%= mensaje %></div>
+    <% } %>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="alert alert-error"><%= error %></div>
+    <% } %>
+
     <section class="card">
       <h2>Productos registrados</h2>
 

@@ -16,6 +16,14 @@
         <a href="/productos" class="btn btn-secondary">Volver</a>
     </header>
 
+    <% if (typeof mensaje !== 'undefined' && mensaje) { %>
+        <div class="alert alert-success"><%= mensaje %></div>
+    <% } %>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert alert-error"><%= error %></div>
+    <% } %>
+
     <section class="card">
         <form method="POST" action="/productos" class="form">
             <label>
