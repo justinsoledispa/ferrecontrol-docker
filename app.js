@@ -24,6 +24,11 @@ app.use(cookieParser());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use((req, res, next) => {
+  res.locals.reportesUrl = process.env.REPORTES_URL || null;
+  next();
+});
+
 // Rutas
 app.use('/', indexRouter);
 app.use('/productos', productosRouter);

@@ -2,20 +2,39 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FerreControl - Productos</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-  <main class="container">
-    <header class="page-header">
-      <div>
-        <h1>FerreControl</h1>
-        <p>Sistema de inventario distribuido</p>
+  <header class="app-header">
+    <div class="header-inner">
+      <a href="/productos" class="brand" aria-label="Ir al inventario">
+        <span class="brand-icon" aria-hidden="true">🔧</span>
+        <span class="brand-copy">
+          <strong>FerreControl</strong>
+          <small>Sistema de inventario distribuido</small>
+        </span>
+      </a>
+
+      <div class="header-actions">
+        <% if (typeof reportesUrl !== 'undefined' && reportesUrl) { %>
+          <a
+            href="<%= reportesUrl %>"
+            class="btn btn-secondary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Ver reportes
+          </a>
+        <% } %>
+
+        <a href="/productos/nuevo" class="btn btn-primary">Nuevo producto</a>
       </div>
+    </div>
+  </header>
 
-      <a href="/productos/nuevo" class="btn btn-primary">Nuevo producto</a>
-    </header>
-
+  <main class="container">
     <% if (typeof mensaje !== 'undefined' && mensaje) { %>
       <div class="alert alert-success"><%= mensaje %></div>
     <% } %>
@@ -24,22 +43,32 @@
       <div class="alert alert-error"><%= error %></div>
     <% } %>
 
-    <section class="card">
-      <h2>Productos registrados</h2>
+    <section class="section">
+      <div class="section-header">
+        <span class="section-stripe stripe-accent" aria-hidden="true"></span>
+        <div>
+          <h1 class="section-title">Productos registrados</h1>
+          <p class="section-desc">Administra las existencias activas del inventario</p>
+        </div>
+        <span class="section-count"><%= productos.length %> productos</span>
+      </div>
 
-      <form method="GET" action="/productos" class="search-form">
-        <input
-          type="text"
-          name="q"
-          placeholder="Buscar por ID o nombre"
-          value="<%= q || '' %>"
-        >
-        <button type="submit" class="btn">Buscar</button>
-        <a href="/productos" class="btn btn-secondary">Limpiar</a>
-      </form>
+      <div class="section-toolbar">
+        <form method="GET" action="/productos" class="search-form">
+          <input
+            type="text"
+            name="q"
+            placeholder="Buscar por ID o nombre"
+            value="<%= q || '' %>"
+            aria-label="Buscar producto por ID o nombre"
+          >
+          <button type="submit" class="btn btn-primary">Buscar</button>
+          <a href="/productos" class="btn btn-secondary">Limpiar</a>
+        </form>
+      </div>
 
       <div class="table-wrapper">
-        <table>
+        <table class="dashboard-table">
           <thead>
             <tr>
               <th>ID</th>
@@ -61,30 +90,35 @@
 
             <% productos.forEach(producto => { %>
               <tr>
-                <td><%= producto.id %></td>
-                <td><%= producto.nombre %></td>
+                <td class="num muted-text">#<%= producto.id %></td>
+                <td class="product-name"><%= producto.nombre %></td>
                 <td>
                   <% if (producto.cantidad < producto.stock_minimo) { %>
-                    <span class="badge danger"><%= producto.cantidad %></span>
+                    <span class="stock-badge stock-low" title="Stock por debajo del mínimo">
+                      <%= producto.cantidad %>
+                      <small>Stock bajo</small>
+                    </span>
                   <% } else { %>
-                    <span class="badge"><%= producto.cantidad %></span>
+                    <span class="stock-badge"><%= producto.cantidad %></span>
                   <% } %>
                 </td>
-                <td>$<%= Number(producto.precio).toFixed(2) %></td>
-                <td>$<%= (Number(producto.cantidad) * Number(producto.precio)).toFixed(2) %></td>
-                <td><%= producto.categoria || 'Sin categoría' %></td>
-                <td><%= producto.proveedor || 'Sin proveedor' %></td>
-                <td class="actions">
-                  <a href="/productos/<%= producto.id %>" class="btn btn-small">Ver</a>
-                  <a href="/productos/<%= producto.id %>/stock" class="btn btn-small">Stock</a>
+                <td class="num">$<%= Number(producto.precio).toFixed(2) %></td>
+                <td class="num money">$<%= (Number(producto.cantidad) * Number(producto.precio)).toFixed(2) %></td>
+                <td><span class="tag"><%= producto.categoria || 'Sin categoría' %></span></td>
+                <td class="provider-text"><%= producto.proveedor || 'Sin proveedor' %></td>
+                <td>
+                  <div class="actions">
+                    <a href="/productos/<%= producto.id %>" class="btn btn-small btn-view">Ver</a>
+                    <a href="/productos/<%= producto.id %>/stock" class="btn btn-small btn-stock">Stock</a>
 
-                  <form
-                    method="POST"
-                    action="/productos/<%= producto.id %>?_method=DELETE"
-                    onsubmit="return confirm('¿Eliminar este producto?');"
-                  >
-                    <button type="submit" class="btn btn-small btn-danger">Eliminar</button>
-                  </form>
+                    <form
+                      method="POST"
+                      action="/productos/<%= producto.id %>?_method=DELETE"
+                      onsubmit="return confirm('¿Eliminar este producto?');"
+                    >
+                      <button type="submit" class="btn btn-small btn-danger">Eliminar</button>
+                    </form>
+                  </div>
                 </td>
               </tr>
             <% }) %>

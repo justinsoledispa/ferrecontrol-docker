@@ -1,73 +1,92 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Actualizar stock - FerreControl</title>
-    <link rel="stylesheet" href="/stylesheets/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Actualizar stock - FerreControl</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-<main class="container">
-    <header class="page-header">
-        <div>
-            <h1>Actualizar stock</h1>
-            <p><%= producto.nombre %></p>
-        </div>
+  <header class="app-header">
+    <div class="header-inner">
+      <a href="/productos" class="brand" aria-label="Ir al inventario">
+        <span class="brand-icon" aria-hidden="true">🔧</span>
+        <span class="brand-copy">
+          <strong>FerreControl</strong>
+          <small>Sistema de inventario distribuido</small>
+        </span>
+      </a>
 
-        <a href="/productos/<%= producto.id %>" class="btn btn-secondary">Volver</a>
-    </header>
+      <a href="/productos/<%= producto.id %>" class="btn btn-secondary">Volver</a>
+    </div>
+  </header>
 
+  <main class="container container-narrow">
     <% if (typeof mensaje !== 'undefined' && mensaje) { %>
-        <div class="alert alert-success"><%= mensaje %></div>
+      <div class="alert alert-success"><%= mensaje %></div>
     <% } %>
 
     <% if (typeof error !== 'undefined' && error) { %>
-        <div class="alert alert-error"><%= error %></div>
+      <div class="alert alert-error"><%= error %></div>
     <% } %>
 
-    <section class="card">
-        <form method="POST" action="/productos/<%= producto.id %>/stock?_method=PUT" class="form">
-            <p><strong>Stock actual:</strong> <%= producto.cantidad %></p>
+    <section class="section">
+      <div class="section-header">
+        <span class="section-stripe stripe-accent" aria-hidden="true"></span>
+        <div>
+          <h1 class="section-title">Actualizar stock</h1>
+          <p class="section-desc"><%= producto.nombre %></p>
+        </div>
+        <span class="stock-summary">
+          <small>Stock actual</small>
+          <strong><%= producto.cantidad %></strong>
+        </span>
+      </div>
 
-            <label>
-                Tipo de movimiento
-                <select name="tipo_movimiento" required>
-                    <option value="">Seleccione una opción</option>
-                    <option value="entrada">Entrada</option>
-                    <option value="salida">Salida</option>
-                    <option value="ajuste">Ajuste</option>
-                </select>
-            </label>
+      <form method="POST" action="/productos/<%= producto.id %>/stock?_method=PUT" class="form">
+        <label class="field">
+          <span>Tipo de movimiento</span>
+          <select name="tipo_movimiento" required>
+            <option value="">Seleccione una opción</option>
+            <option value="entrada">Entrada</option>
+            <option value="salida">Salida</option>
+            <option value="ajuste">Ajuste</option>
+          </select>
+        </label>
 
-            <label>
-                Cantidad
-                <input
-                        type="number"
-                        name="cantidad"
-                        required
-                        min="1"
-                        placeholder="Ejemplo: 5"
-                >
-            </label>
+        <label class="field">
+          <span>Cantidad</span>
+          <input
+            type="number"
+            name="cantidad"
+            required
+            min="1"
+            placeholder="Ejemplo: 5"
+          >
+        </label>
 
-            <p class="form-help">
-                <strong>Entrada:</strong> suma la cantidad al stock actual.<br>
-                <strong>Salida:</strong> resta la cantidad del stock actual.<br>
-                <strong>Ajuste:</strong> establece la cantidad ingresada como el stock final corregido.
-            </p>
+        <div class="form-help">
+          <span><strong>Entrada:</strong> suma la cantidad al stock actual.</span>
+          <span><strong>Salida:</strong> resta la cantidad del stock actual.</span>
+          <span><strong>Ajuste:</strong> establece la cantidad ingresada como el stock final corregido.</span>
+        </div>
 
-            <label>
-                Motivo
-                <input
-                        type="text"
-                        name="motivo"
-                        maxlength="200"
-                        placeholder="Ejemplo: reposición, venta, pérdida, daño o corrección"
-                >
-            </label>
+        <label class="field">
+          <span>Motivo</span>
+          <input
+            type="text"
+            name="motivo"
+            maxlength="200"
+            placeholder="Ejemplo: reposición, venta, pérdida, daño o corrección"
+          >
+        </label>
 
-            <button type="submit" class="btn btn-primary">Guardar movimiento</button>
-        </form>
+        <div class="form-actions">
+          <a href="/productos/<%= producto.id %>" class="btn btn-secondary">Cancelar</a>
+          <button type="submit" class="btn btn-primary">Guardar movimiento</button>
+        </div>
+      </form>
     </section>
-</main>
+  </main>
 </body>
 </html>

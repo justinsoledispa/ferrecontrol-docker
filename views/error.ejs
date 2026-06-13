@@ -2,17 +2,31 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ocurrió un error - FerreControl</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-  <main class="container error-page">
-    <section class="card error-card">
-      <p class="error-status">
+  <header class="app-header">
+    <div class="header-inner">
+      <a href="/productos" class="brand" aria-label="Ir al inventario">
+        <span class="brand-icon" aria-hidden="true">🔧</span>
+        <span class="brand-copy">
+          <strong>FerreControl</strong>
+          <small>Sistema de inventario distribuido</small>
+        </span>
+      </a>
+    </div>
+  </header>
+
+  <main class="error-page">
+    <section class="section error-card">
+      <span class="error-code">
         Error <%= typeof error !== 'undefined' && error && error.status ? error.status : 500 %>
-      </p>
+      </span>
+      <div class="error-icon" aria-hidden="true">!</div>
       <h1>Ocurrió un error</h1>
-      <p class="error-message">
+      <p>
         <%= typeof message !== 'undefined' && message
           ? message
           : 'No fue posible completar la solicitud.' %>

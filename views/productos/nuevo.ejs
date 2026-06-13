@@ -1,54 +1,73 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Nuevo producto - FerreControl</title>
-    <link rel="stylesheet" href="/stylesheets/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuevo producto - FerreControl</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-<main class="container">
-    <header class="page-header">
-        <div>
-            <h1>Nuevo producto</h1>
-            <p>Registrar producto en el inventario</p>
-        </div>
+  <header class="app-header">
+    <div class="header-inner">
+      <a href="/productos" class="brand" aria-label="Ir al inventario">
+        <span class="brand-icon" aria-hidden="true">🔧</span>
+        <span class="brand-copy">
+          <strong>FerreControl</strong>
+          <small>Sistema de inventario distribuido</small>
+        </span>
+      </a>
 
-        <a href="/productos" class="btn btn-secondary">Volver</a>
-    </header>
+      <a href="/productos" class="btn btn-secondary">Volver</a>
+    </div>
+  </header>
 
+  <main class="container container-narrow">
     <% if (typeof mensaje !== 'undefined' && mensaje) { %>
-        <div class="alert alert-success"><%= mensaje %></div>
+      <div class="alert alert-success"><%= mensaje %></div>
     <% } %>
 
     <% if (typeof error !== 'undefined' && error) { %>
-        <div class="alert alert-error"><%= error %></div>
+      <div class="alert alert-error"><%= error %></div>
     <% } %>
 
-    <section class="card">
-        <form method="POST" action="/productos" class="form">
-            <label>
-                Nombre
-                <input type="text" name="nombre" required maxlength="120">
-            </label>
+    <section class="section">
+      <div class="section-header">
+        <span class="section-stripe stripe-accent" aria-hidden="true"></span>
+        <div>
+          <h1 class="section-title">Nuevo producto</h1>
+          <p class="section-desc">Registra un producto en el inventario</p>
+        </div>
+      </div>
 
-            <label>
-                Descripción
-                <textarea name="descripcion" rows="4"></textarea>
-            </label>
+      <form method="POST" action="/productos" class="form">
+        <label class="field">
+          <span>Nombre</span>
+          <input type="text" name="nombre" required maxlength="120" placeholder="Ejemplo: Martillo de acero">
+        </label>
 
-            <label>
-                Cantidad en stock
-                <input type="number" name="cantidad" required min="0">
-            </label>
+        <label class="field">
+          <span>Descripción</span>
+          <textarea name="descripcion" rows="4" placeholder="Describe brevemente el producto"></textarea>
+        </label>
 
-            <label>
-                Precio unitario
-                <input type="number" name="precio" required min="0" step="0.01">
-            </label>
+        <div class="form-grid">
+          <label class="field">
+            <span>Cantidad en stock</span>
+            <input type="number" name="cantidad" required min="0" placeholder="0">
+          </label>
 
-            <button type="submit" class="btn btn-primary">Guardar producto</button>
-        </form>
+          <label class="field">
+            <span>Precio unitario</span>
+            <input type="number" name="precio" required min="0" step="0.01" placeholder="0.00">
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <a href="/productos" class="btn btn-secondary">Cancelar</a>
+          <button type="submit" class="btn btn-primary">Guardar producto</button>
+        </div>
+      </form>
     </section>
-</main>
+  </main>
 </body>
 </html>

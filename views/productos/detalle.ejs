@@ -2,20 +2,26 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Detalle producto - FerreControl</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-  <main class="container">
-    <header class="page-header">
-      <div>
-        <h1><%= producto.nombre %></h1>
-        <p>Detalle del producto</p>
-      </div>
+  <header class="app-header">
+    <div class="header-inner">
+      <a href="/productos" class="brand" aria-label="Ir al inventario">
+        <span class="brand-icon" aria-hidden="true">🔧</span>
+        <span class="brand-copy">
+          <strong>FerreControl</strong>
+          <small>Sistema de inventario distribuido</small>
+        </span>
+      </a>
 
       <a href="/productos" class="btn btn-secondary">Volver</a>
-    </header>
+    </div>
+  </header>
 
+  <main class="container">
     <% if (typeof mensaje !== 'undefined' && mensaje) { %>
       <div class="alert alert-success"><%= mensaje %></div>
     <% } %>
@@ -24,34 +30,71 @@
       <div class="alert alert-error"><%= error %></div>
     <% } %>
 
-    <section class="card detail-card">
-      <p><strong>ID:</strong> <%= producto.id %></p>
-      <p><strong>Descripción:</strong> <%= producto.descripcion || 'Sin descripción' %></p>
-      <p><strong>Cantidad:</strong> <%= producto.cantidad %></p>
-      <p><strong>Stock mínimo:</strong> <%= producto.stock_minimo %></p>
-      <p><strong>Precio unitario:</strong> $<%= Number(producto.precio).toFixed(2) %></p>
-      <p><strong>Valor total:</strong> $<%= (Number(producto.cantidad) * Number(producto.precio)).toFixed(2) %></p>
-      <p><strong>Categoría:</strong> <%= producto.categoria || 'Sin categoría' %></p>
-      <p><strong>Proveedor:</strong> <%= producto.proveedor || 'Sin proveedor' %></p>
+    <section class="section">
+      <div class="section-header">
+        <span class="section-stripe stripe-accent" aria-hidden="true"></span>
+        <div>
+          <h1 class="section-title"><%= producto.nombre %></h1>
+          <p class="section-desc">Detalle general del producto #<%= producto.id %></p>
+        </div>
+      </div>
 
-      <div class="actions">
-        <a href="/productos/<%= producto.id %>/stock" class="btn btn-primary">Actualizar stock</a>
+      <div class="detail-content">
+        <div class="detail-grid">
+          <article class="detail-item detail-wide">
+            <span class="detail-label">Descripción</span>
+            <strong><%= producto.descripcion || 'Sin descripción' %></strong>
+          </article>
+          <article class="detail-item">
+            <span class="detail-label">Cantidad</span>
+            <strong class="detail-value"><%= producto.cantidad %></strong>
+          </article>
+          <article class="detail-item">
+            <span class="detail-label">Stock mínimo</span>
+            <strong class="detail-value"><%= producto.stock_minimo %></strong>
+          </article>
+          <article class="detail-item">
+            <span class="detail-label">Precio unitario</span>
+            <strong class="detail-value money">$<%= Number(producto.precio).toFixed(2) %></strong>
+          </article>
+          <article class="detail-item">
+            <span class="detail-label">Valor total</span>
+            <strong class="detail-value money">$<%= (Number(producto.cantidad) * Number(producto.precio)).toFixed(2) %></strong>
+          </article>
+          <article class="detail-item">
+            <span class="detail-label">Categoría</span>
+            <strong><span class="tag"><%= producto.categoria || 'Sin categoría' %></span></strong>
+          </article>
+          <article class="detail-item">
+            <span class="detail-label">Proveedor</span>
+            <strong><%= producto.proveedor || 'Sin proveedor' %></strong>
+          </article>
+        </div>
 
-        <form
-          method="POST"
-          action="/productos/<%= producto.id %>?_method=DELETE"
-          onsubmit="return confirm('¿Eliminar este producto?');"
-        >
-          <button type="submit" class="btn btn-danger">Eliminar producto</button>
-        </form>
+        <div class="detail-actions">
+          <a href="/productos/<%= producto.id %>/stock" class="btn btn-primary">Actualizar stock</a>
+          <form
+            method="POST"
+            action="/productos/<%= producto.id %>?_method=DELETE"
+            onsubmit="return confirm('¿Eliminar este producto?');"
+          >
+            <button type="submit" class="btn btn-danger">Eliminar producto</button>
+          </form>
+        </div>
       </div>
     </section>
 
-    <section class="card movements-card">
-      <h2>Historial de movimientos</h2>
+    <section class="section movements-section">
+      <div class="section-header">
+        <span class="section-stripe stripe-success" aria-hidden="true"></span>
+        <div>
+          <h2 class="section-title">Historial de movimientos</h2>
+          <p class="section-desc">Últimos cambios registrados en el stock</p>
+        </div>
+      </div>
 
       <div class="table-wrapper">
-        <table>
+        <table class="dashboard-table">
           <thead>
             <tr>
               <th>Tipo de movimiento</th>
@@ -73,9 +116,9 @@
                       <%= movimiento.tipo_movimiento %>
                     </span>
                   </td>
-                  <td><%= movimiento.cantidad %></td>
+                  <td class="num"><%= movimiento.cantidad %></td>
                   <td><%= movimiento.motivo || 'Sin motivo' %></td>
-                  <td><%= movimiento.fecha_formateada %></td>
+                  <td class="muted-text"><%= movimiento.fecha_formateada || 'Fecha no disponible' %></td>
                 </tr>
               <% }) %>
             <% } %>
