@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalle producto - FerreControl</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+  <main class="container">
+    <header class="page-header">
+      <div>
+        <h1><%= producto.nombre %></h1>
+        <p>Detalle del producto</p>
+      </div>
+
+      <a href="/productos" class="btn btn-secondary">Volver</a>
+    </header>
+
+    <section class="card detail-card">
+      <p><strong>ID:</strong> <%= producto.id %></p>
+      <p><strong>Descripción:</strong> <%= producto.descripcion || 'Sin descripción' %></p>
+      <p><strong>Cantidad:</strong> <%= producto.cantidad %></p>
+      <p><strong>Stock mínimo:</strong> <%= producto.stock_minimo %></p>
+      <p><strong>Precio unitario:</strong> $<%= Number(producto.precio).toFixed(2) %></p>
+      <p><strong>Valor total:</strong> $<%= (Number(producto.cantidad) * Number(producto.precio)).toFixed(2) %></p>
+      <p><strong>Categoría:</strong> <%= producto.categoria || 'Sin categoría' %></p>
+      <p><strong>Proveedor:</strong> <%= producto.proveedor || 'Sin proveedor' %></p>
+
+      <div class="actions">
+        <a href="/productos/<%= producto.id %>/stock" class="btn btn-primary">Actualizar stock</a>
+
+        <form
+          method="POST"
+          action="/productos/<%= producto.id %>?_method=DELETE"
+          onsubmit="return confirm('¿Eliminar este producto?');"
+        >
+          <button type="submit" class="btn btn-danger">Eliminar producto</button>
+        </form>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

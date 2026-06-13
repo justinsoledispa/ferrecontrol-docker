@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Actualizar stock - FerreControl</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+<main class="container">
+    <header class="page-header">
+        <div>
+            <h1>Actualizar stock</h1>
+            <p><%= producto.nombre %></p>
+        </div>
+
+        <a href="/productos/<%= producto.id %>" class="btn btn-secondary">Volver</a>
+    </header>
+
+    <section class="card">
+        <form method="POST" action="/productos/<%= producto.id %>/stock?_method=PUT" class="form">
+            <p><strong>Stock actual:</strong> <%= producto.cantidad %></p>
+
+            <label>
+                Nueva cantidad
+                <input
+                        type="number"
+                        name="cantidad"
+                        required
+                        min="0"
+                        value="<%= producto.cantidad %>"
+                >
+            </label>
+
+            <label>
+                Motivo
+                <textarea
+                        name="motivo"
+                        rows="3"
+                        placeholder="Ejemplo: reposición, venta, corrección, pérdida o daño"
+                ></textarea>
+            </label>
+
+            <button type="submit" class="btn btn-primary">Guardar cambio</button>
+        </form>
+    </section>
+</main>
+</body>
+</html>

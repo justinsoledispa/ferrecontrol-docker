@@ -1,0 +1,23 @@
+services:
+  ferrecontrol_postgres_local:
+    image: postgres:16
+    container_name: ferrecontrol_postgres_local
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ferrecontrol_db
+      POSTGRES_USER: ferrecontrol_user
+      POSTGRES_PASSWORD: ferrecontrol_pass
+    ports:
+      - "5433:5432"
+    volumes:
+      - ferrecontrol_pgdata_local:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - ferrecontrol_local_net
+
+volumes:
+  ferrecontrol_pgdata_local:
+
+networks:
+  ferrecontrol_local_net:
+    driver: bridge
