@@ -16,31 +16,54 @@
         <a href="/productos/<%= producto.id %>" class="btn btn-secondary">Volver</a>
     </header>
 
+    <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert alert-error"><%= error %></div>
+    <% } %>
+
+    <% if (typeof mensaje !== 'undefined' && mensaje) { %>
+        <div class="alert alert-success"><%= mensaje %></div>
+    <% } %>
+
     <section class="card">
         <form method="POST" action="/productos/<%= producto.id %>/stock?_method=PUT" class="form">
             <p><strong>Stock actual:</strong> <%= producto.cantidad %></p>
 
             <label>
-                Nueva cantidad
+                Tipo de movimiento
+                <select name="tipo_movimiento" required>
+                    <option value="">Seleccione una opción</option>
+                    <option value="entrada">Entrada</option>
+                    <option value="salida">Salida</option>
+                    <option value="ajuste">Ajuste</option>
+                </select>
+            </label>
+
+            <label>
+                Cantidad a mover
                 <input
                         type="number"
                         name="cantidad"
                         required
-                        min="0"
-                        value="<%= producto.cantidad %>"
+                        min="1"
+                        placeholder="Ejemplo: 5"
                 >
             </label>
 
+            <p class="form-help">
+                En entrada se suma al stock actual. En salida se resta del stock actual. En ajuste, la cantidad ingresada será el nuevo stock corregido.
+            </p>
+
             <label>
                 Motivo
-                <textarea
+                <input
+                        type="text"
                         name="motivo"
-                        rows="3"
-                        placeholder="Ejemplo: reposición, venta, corrección, pérdida o daño"
-                ></textarea>
+                        maxlength="200"
+                        placeholder="Ejemplo: reposición, venta, pérdida, daño o corrección"
+                >
             </label>
 
-            <button type="submit" class="btn btn-primary">Guardar cambio</button>
+            <button type="submit" class="btn btn-primary">Guardar movimiento</button>
         </form>
     </section>
 </main>

@@ -1,22 +1,23 @@
 services:
-  ferrecontrol_postgres_local:
-    image: postgres:16
-    container_name: ferrecontrol_postgres_local
+  ferrecontrol_mysql_local:
+    image: mysql:8.0
+    container_name: ferrecontrol_mysql_local
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ferrecontrol_db
-      POSTGRES_USER: ferrecontrol_user
-      POSTGRES_PASSWORD: ferrecontrol_pass
+      MYSQL_DATABASE: ferrecontrol_db
+      MYSQL_USER: ferrecontrol_user
+      MYSQL_PASSWORD: ferrecontrol_pass
+      MYSQL_ROOT_PASSWORD: ferrecontrol_root_pass
     ports:
-      - "5433:5432"
+      - "3307:3306"
     volumes:
-      - ferrecontrol_pgdata_local:/var/lib/postgresql/data
+      - ferrecontrol_mysql_data_local:/var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - ferrecontrol_local_net
 
 volumes:
-  ferrecontrol_pgdata_local:
+  ferrecontrol_mysql_data_local:
 
 networks:
   ferrecontrol_local_net:
