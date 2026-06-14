@@ -373,3 +373,15 @@ docker run --rm --name ferrecontrol_app_tailscale -p 3000:3000 --env-file .env.t
 ---
 
 Proyecto académico — Sistema de Inventario Distribuido con Docker y Tailscale · 2026
+
+
+## Imágenes
+<img width="977" height="712" alt="Captura de pantalla 2026-06-14 110502" src="https://github.com/user-attachments/assets/91e0a0fd-1a53-4165-aaba-d810a545f3c2" />
+<img width="1562" height="806" alt="Captura de pantalla 2026-06-14 111128" src="https://github.com/user-attachments/assets/81a97baa-8d4d-4b74-bae3-04ddd174561d" />
+<img width="925" height="192" alt="Captura de pantalla 2026-06-14 111728" src="https://github.com/user-attachments/assets/30390848-1d80-4e3e-90e4-346141045a84" />
+<img width="1896" height="862" alt="Captura de pantalla 2026-06-14 112454" src="https://github.com/user-attachments/assets/77d70cc6-b564-4eb2-9880-8bdb3760de14" />
+<img width="1898" height="863" alt="Captura de pantalla 2026-06-14 112509" src="https://github.com/user-attachments/assets/bf8db0b8-3d99-40a4-802d-937402ef06c9" />
+<img width="1897" height="860" alt="Captura de pantalla 2026-06-14 112516" src="https://github.com/user-attachments/assets/d2d5cf12-a937-4191-b475-e4657d9fe525" />
+<img width="1900" height="873" alt="Captura de pantalla 2026-06-14 112524" src="https://github.com/user-attachments/assets/f7209a71-0bfd-4e9a-abed-be19efbb63c1" />
+<img width="1913" height="862" alt="Captura de pantalla 2026-06-14 112649" src="https://github.com/user-attachments/assets/2b8a4d57-8dc5-4e1c-87cd-d5a6a1b7b6bb" />
+
