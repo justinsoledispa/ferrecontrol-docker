@@ -1,0 +1,11 @@
+{
+  "name": "ferrecontrol-reportes",
+  "version": "1.0.0",
+  "description": "Modulo de reportes para el sistema FerreControl",
+  "main": "main.js",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mysql2": "^3.9.2"
+  }
+}

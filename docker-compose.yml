@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  ferrecontrol_db:
+    image: mysql:8.0
+    container_name: ferrecontrol_db
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "3307:3306"  # Puerto abierto para que el Estudiante 1 entre por Tailscale
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql  # Carga automática de tablas
+    networks:
+      - ferrecontrol_net
+    restart: always
+
+  ferrecontrol_reportes:
+    build: ./reportes
+    container_name: ferrecontrol_reportes
+    ports:
+      - "8080:8080"  # Puerto para ver tus reportes JSON desde el navegador
+    env_file:
+      - .env
+    depends_on:
+      - ferrecontrol_db
+    networks:
+      - ferrecontrol_net
+    restart: always
+
+volumes:
+  mysql_data:  # Garantiza la persistencia obligatoria por la consigna
+
+networks:
+  ferrecontrol_net:  # Red interna personalizada para que se comuniquen por nombre de servicio
+    driver: bridge
